@@ -1,6 +1,7 @@
 package com.jackmouse.oauth2.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.math.BigInteger;
 import java.security.KeyFactory;
@@ -15,6 +16,7 @@ import java.security.spec.RSAPublicKeySpec;
  * @Date 2022/7/26 22:49
  * @Version 1.0
  **/
+@Configuration
 public class KeyConfig {
     @Bean
     KeyPair keyPair() {
