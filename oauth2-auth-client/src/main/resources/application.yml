@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  thymeleaf:
+    cache: false
+  #OAuth2.0???????
+  security:
+    oauth2:
+      client:
+        registration:
+          gitee:
+            ##???????App??
+            client-id: xxx
+            client-secret: xxx
+          #          github:
+          #            ##???????App??
+          #            client-id: xxx
+          #            client-secret: xxx
+          ## ??????OAuth2.0??????
+          goodskill:
+            ##???????App??
+            client-id: second-client
+            client-secret: noonewilleverguess

@@ -15,13 +15,7 @@
     <modules>
         <module>oauth2-auth-server</module>
         <module>oauth2-resource-server</module>
+        <module>oauth2-auth-client</module>
     </modules>
-    <dependencies>
-        <dependency>
-            <groupId>org.jetbrains.externalAnnotations.junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12-an1</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+
 </project>
