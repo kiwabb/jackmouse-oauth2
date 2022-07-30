@@ -94,62 +94,36 @@ management:
 ```
 - #### 3.启动类
 ```java
-/**
- * 开启oauth认证服务器
- * @author zhoujiaangyao
- */
 @SpringBootApplication
-@EnableAuthorizationServer
-public class Oauth2AuthServerApplication {
+public class Oauth2ResourceServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Oauth2AuthServerApplication.class, args);
+        SpringApplication.run(Oauth2ResourceServerApplication.class, args);
     }
 
 }
 ```
 - #### 4.WebSecurityConfig类配置
 ```java
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class OAuth2ResourceServerSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Value("${spring.security.oauth2.resourceserver.jwt.jwk-set-uri}")
+    String jwkSetUri;
 
-    /**
-     * 配置登录系统的用户信息（内存实现）
-     * @return 用户信息
-     */
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.withDefaultPasswordEncoder()
-                        .username("jackmouse")
-                        .password("123456")
-                        .roles("USER")
-                        .build());
-    }
-
-    /**
-     * 配置http请求访问权限
-     * @param http http
-     * @throws Exception Exception
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                //基于jws的认证，放行请求jws数据的请求
-                .mvcMatchers("/.well-known/jwks.json").permitAll()
-                //任何请求都需要认证
-                .anyRequest().authenticated()
-                .and()
-                //开启httpBasic认证方式
-                .httpBasic()
-                .and()
-                //关闭csrf
-                .csrf()
-//                .ignoringRequestMatchers((request) -> "/introspect".equals(request.getRequestURI()))
-                .disable();
+                .authorizeRequests((authorizeRequests) ->
+                        authorizeRequests
+                                .anyRequest().authenticated()
+                )
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     }
 
+    @Bean
+    public JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
+    }
 }
 
 ```
