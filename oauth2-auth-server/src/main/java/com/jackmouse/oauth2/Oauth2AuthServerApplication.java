@@ -11,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * @author zhoujiaangyao
  */
 
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableAuthorizationServer
 public class Oauth2AuthServerApplication {
 

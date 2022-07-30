@@ -18,3 +18,5 @@
 /build/
 /.classpath
 !/pom.xml
+*/.gitignore
+*/mvnw*
